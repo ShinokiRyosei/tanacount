@@ -8,7 +8,7 @@
         <!--Menu View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="menuViewController" customModule="lookingfor_2ndproject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MenuViewController" customModule="lookingfor_2ndproject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -63,9 +63,6 @@
                                     <action selector="cameraStart:" destination="bS2-1c-tNJ" eventType="touchUpInside" id="9Xy-kd-UZh"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jao-NG-sKP">
-                                <rect key="frame" x="17" y="58" width="287" height="347"/>
-                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="物の名前" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2ab-Fn-mHp">
                                 <rect key="frame" x="35" y="20" width="250" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -95,6 +92,9 @@
                                     <action selector="savePic:" destination="bS2-1c-tNJ" eventType="touchUpInside" id="F4o-PB-uUi"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jao-NG-sKP">
+                                <rect key="frame" x="17" y="58" width="287" height="347"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

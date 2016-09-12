@@ -40,20 +40,23 @@ class LookforViewController: UIViewController, UICollectionViewDataSource, UICol
     func loadImages() {
         let realm = try! Realm()
         let informations = realm.objects(Information)
+        
         informations.map { $0 }.forEach { self.infoarray.append($0) }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            // Backgroundで実行
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                // Main Threadで実行する
-                for info in self.infoarray {
-                    let imagePath = Path.documentsDir.content(info.images).asString
-                    let changeimage = UIImage(contentsOfFile: imagePath)!
-                    self.imagearray.append(UIImage(CGImage: changeimage.CGImage!, scale: 1.0, orientation: .Right))
-                }
-                self.collectionview.reloadData()
-            })
-        })
+        self.collectionview.reloadData()
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+//            // Backgroundで実行
+//            
+//            dispatch_async(dispatch_get_main_queue(), {
+//                // Main Threadで実行する
+//                for info in self.infoarray {
+//                    self.imagearray.append(UIImage(data: info.images)!)
+////                    let imagePath = Path.documentsDir.content(info.images).asString
+////                    let changeimage = UIImage(contentsOfFile: imagePath)!
+////                    self.imagearray.append(UIImage(CGImage: changeimage.CGImage!, scale: 1.0, orientation: .Right))
+//                }
+//                self.collectionview.reloadData()
+//            })
+//        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,11 +65,11 @@ class LookforViewController: UIViewController, UICollectionViewDataSource, UICol
         
     }
     
-    // セルが表示されるときに呼ばれる処理（1個のセルを描画する毎に呼び出されます
+    // セルが表示されるときに呼ばれる処理（1個のセルを描画する毎に呼び出されます 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! ShowCollectionCell
         
-        cell.imageView.image = imagearray[indexPath.row]
+        cell.imageView.image = infoarray[indexPath.row].images
         //let angle:CGFloat = CGFloat((90.0 * M_PI) / 180.0)
         //cell.imageView.transform = CGAffineTransformMakeRotation(angle)
         cell.titileLabel.text = infoarray[indexPath.row].textmessages
@@ -81,7 +84,7 @@ class LookforViewController: UIViewController, UICollectionViewDataSource, UICol
     
     // 表示するセルの数
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagearray.count
+        return infoarray.count
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

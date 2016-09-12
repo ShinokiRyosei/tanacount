@@ -37,8 +37,8 @@ class CameraViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     // カメラの撮影開始
     @IBAction func cameraStart(sender : AnyObject) {
-        let sourceType:UIImagePickerControllerSourceType = UIImagePickerControllerSourceType.Camera
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+        let sourceType:UIImagePickerControllerSourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
             let cameraPicker = UIImagePickerController()
             cameraPicker.sourceType = sourceType
             cameraPicker.delegate = self
@@ -66,32 +66,15 @@ class CameraViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     // すべてを保存
     @IBAction func savePic(sender : AnyObject) {
         
-        let information = Information()
-        let image: UIImage? = cameraView.image
-        if let photoData = UIImagePNGRepresentation(image!) {
-            let uuid = NSUUID().UUIDString
-            let photoName = "\(uuid).png"
-            let path = Path.documentsDir[photoName].asString
-            if photoData.writeToFile(path, atomically: true) {
-                let alertController = UIAlertController(title: "保存完了", message: "保存が完了しました。", preferredStyle: UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "おーけー", style: UIAlertActionStyle.Default) { _ in
-                }
-                alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            } else {
-                print("Error")
-            }
-            
-            information.images = uuid
-        }
+        guard let image: UIImage = cameraView.image else { return }
+        guard let text: String = textforthing.text else { return }
         
-        information.textmessages = textforthing.text!
-        information.recordmessages = messageURL
+        guard let info: Information = Information.create(image, text: text, messages: messageURL) else { return }
         
         let realm = try! Realm()
         
         try! realm.write {
-            realm.add(information)
+            realm.add(info)
         }
     }
     
